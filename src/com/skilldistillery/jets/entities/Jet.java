@@ -65,13 +65,13 @@ public abstract class Jet {
 
 	@Override
 	public String toString() {
-		return "Jet model: " + model + ", Speed:" + speed + ", Range:" + range + ", Price: $" + price + " .";
+		return "Jet model: " + model + ", Speed:" + speed + ", Range:" + range + ", Price: $" + price + " ." + "\n";
 	}
 
 	
 	public void fly() {
 		double flightTime = (int) Math.round(range / speed);
 		
-		System.out.println("Model: " + this.model + " can fly for: " + flightTime + " hours at a speed of: " + speed);
+		System.out.println("Model: " + this.model + " can fly for: " + flightTime + " hours at a speed of: " + speed + "\n");
 	}
 }

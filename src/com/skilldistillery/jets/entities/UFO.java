@@ -22,7 +22,7 @@ public class UFO extends Jet implements AlienShip{
         System.out.println("                ***                     ");
         System.out.println("                ***                     ");
         System.out.println("                                        ");
-		
+		System.out.println("\n");
 		
 	}
 

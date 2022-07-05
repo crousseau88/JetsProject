@@ -20,7 +20,7 @@ public class FighterJets extends Jet implements CombatReady {
 		System.out.println("          `'-.,__________)        *===>         ");
         System.out.println();
 		System.out.println();
-		System.out.println("Okay Mav, let's turn and burn!");
+		System.out.println("Okay Mav, let's turn and burn!" + "\n");
 		
 	}
 }

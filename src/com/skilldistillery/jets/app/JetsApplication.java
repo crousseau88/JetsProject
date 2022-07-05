@@ -7,6 +7,7 @@ import com.skilldistillery.jets.entities.CargoPlanes;
 import com.skilldistillery.jets.entities.FighterJets;
 import com.skilldistillery.jets.entities.Jet;
 import com.skilldistillery.jets.entities.Passenger;
+import com.skilldistillery.jets.entities.PassengerPlane;
 import com.skilldistillery.jets.entities.UFO;
 
 public class JetsApplication {
@@ -45,9 +46,10 @@ public class JetsApplication {
 		System.out.println("@ 5. Load all cargo jets         @");
 		System.out.println("@ 6. Dogfight!                   @");
 		System.out.println("@ 7. Hunt Earthlings!            @");
-		System.out.println("@ 8. Add a jet to Fleet          @");
-		System.out.println("@ 9. Remove a jet from Fleet     @");
-		System.out.println("@ 10. Quit                       @");
+		System.out.println("@ 8. Load Passengers             @");
+		System.out.println("@ 9. Add a jet to Fleet          @");
+		System.out.println("@ 10. Remove a jet from Fleet    @");
+		System.out.println("@ 11. Quit                       @");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
 	}
@@ -80,6 +82,7 @@ public class JetsApplication {
 			loadCargoPlanes();
 			System.out.println();
 			break;
+			
 		case 6:
 			dogFight();
 			System.out.println();
@@ -88,18 +91,23 @@ public class JetsApplication {
 			huntEarthlings();
 			System.out.println();
 			break;
+			
 		case 8:
+			allAboard();
+			System.out.println();
+			break;
+			
+		case 9:
 			addAircraft(kb);
 			System.out.println();
 			break;
 		
-		case 9:
+		case 10:
 			removeAircraft(kb);
 			System.out.println();
 			break;
-		
-		case 10:
 			
+		case 11:
 			quitProgram();
 			return false;
 		default: System.out.println("Invalid entry, please make another selection.");
@@ -108,11 +116,12 @@ public class JetsApplication {
 		return true;
 	}
 
+	
+
 	private void addAircraft(Scanner kb) {
 
 		System.out.println("Please enter the type of aircraft (Passenger, Cargo, Fighter, or UFO): ");
-		String type = kb.next(); //part of stretch but has no current function aside from allowing the input type to match on add
-
+		String type = kb.next(); //This ensures that the type matches so after entering type specific features may be used.
 		System.out.println("Please enter the model of aircraft you would like to add: ");
 		String model = kb.next();
 
@@ -175,7 +184,15 @@ public class JetsApplication {
 		}
 		
 	}
-
+	private void allAboard() {
+		for (Jet jet : airField.fleet) {
+			if(jet instanceof PassengerPlane) {
+				System.out.println(jet.toString());
+				((PassengerPlane) jet).loadPassengers();
+			}
+		}
+		
+	}
 	private void loadCargoPlanes() {
 
 		for (Jet jet : airField.fleet) {
@@ -238,7 +255,7 @@ public class JetsApplication {
 		
 	}
 	private void quitProgram() {
-		System.out.println("Thank you for using Jets!");
+		System.out.println("Thank you for using Jets!" + "Please fly with us again.");
 		kb.close();
 		System.exit(0);
 	}
