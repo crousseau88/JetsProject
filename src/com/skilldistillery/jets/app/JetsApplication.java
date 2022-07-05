@@ -187,8 +187,12 @@ public class JetsApplication {
 
 	}
 	private void huntEarthlings() {
-		UFO alienCraft = new UFO(null, 0, 0, 0);
-				alienCraft.huntEarthlings();
+		for (Jet jet : airField.fleet) {
+			if(jet instanceof UFO) {
+				System.out.println(jet.toString());
+				((UFO) jet).huntEarthlings();
+			}
+		}
 	}
 	private void dogFight() {
 		for (Jet jet : airField.fleet) {
