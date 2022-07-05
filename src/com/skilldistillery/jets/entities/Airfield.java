@@ -39,6 +39,9 @@ public class Airfield {
 				} else if (jetType.equals("Cargo")) {
 				Jet cargo = new CargoPlanes(jetModel, jetSpeed, jetRange, jetPrice);
 					fleet.add(cargo);
+				} else if (jetType.equals("UFO")) {
+					Jet ufo = new UFO(jetModel, jetSpeed, jetRange, jetPrice);
+					fleet.add(ufo);
 				} else {
 				Jet pass = new Passenger(jetModel, jetSpeed, jetRange, jetPrice);
 				fleet.add(pass);

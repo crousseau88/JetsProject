@@ -7,6 +7,7 @@ import com.skilldistillery.jets.entities.CargoPlanes;
 import com.skilldistillery.jets.entities.FighterJets;
 import com.skilldistillery.jets.entities.Jet;
 import com.skilldistillery.jets.entities.Passenger;
+import com.skilldistillery.jets.entities.UFO;
 
 public class JetsApplication {
 
@@ -21,7 +22,6 @@ public class JetsApplication {
 	}
 
 	private void run() {
-//		Airfield airField = new Airfield();
 		airField.jetFleet("jets.txt");
 		while (true) {
 			displayMenu();
@@ -34,6 +34,7 @@ public class JetsApplication {
 	private void displayMenu() {
 
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+		System.out.println("@                                @");
 		System.out.println("@             __|__              @");
 		System.out.println("@      --@--@--(_)--@--@--       @");
 		System.out.println("@           !   !   !            @");
@@ -43,17 +44,15 @@ public class JetsApplication {
 		System.out.println("@ 4. View jet with longest range @");
 		System.out.println("@ 5. Load all cargo jets         @");
 		System.out.println("@ 6. Dogfight!                   @");
-		System.out.println("@ 7. Add a jet to Fleet          @");
-		System.out.println("@ 8. Remove a jet from Fleet     @");
-		System.out.println("@ 9. Quit                        @");
+		System.out.println("@ 7. Hunt Earthlings!            @");
+		System.out.println("@ 8. Add a jet to Fleet          @");
+		System.out.println("@ 9. Remove a jet from Fleet     @");
+		System.out.println("@ 10. Quit                       @");
 		System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
 
 	}
 
-	public boolean makeChoice(int choice) {
-//		JetsApplication addPlanes = new JetsApplication();
-//		JetsApplication removePlanes = new JetsApplication();
-	
+	private boolean makeChoice(int choice) {
 
 		System.out.println("Please make a selection between 1-10.");
 
@@ -86,23 +85,32 @@ public class JetsApplication {
 			System.out.println();
 			break;
 		case 7:
-			addAircraft(kb);
+			huntEarthlings();
 			System.out.println();
 			break;
 		case 8:
+			addAircraft(kb);
+			System.out.println();
+			break;
+		
+		case 9:
 			removeAircraft(kb);
 			System.out.println();
 			break;
-		case 9:
+		
+		case 10:
+			
 			quitProgram();
 			return false;
+		default: System.out.println("Invalid entry, please make another selection.");
+		
 		}
 		return true;
 	}
 
-	public void addAircraft(Scanner kb) {
+	private void addAircraft(Scanner kb) {
 
-		System.out.println("Please enter the type of aircraft (Passenger, Cargo, Fighter): ");
+		System.out.println("Please enter the type of aircraft (Passenger, Cargo, Fighter, or UFO): ");
 		String type = kb.next(); //part of stretch but has no current function aside from allowing the input type to match on add
 
 		System.out.println("Please enter the model of aircraft you would like to add: ");
@@ -126,11 +134,14 @@ public class JetsApplication {
 		} else if (type.equalsIgnoreCase("Passenger")) {
 			Passenger pass = new Passenger(model, speed, range, price);
 			airField.fleet.add(pass);
+		} else if (type.equalsIgnoreCase("UFO")) {
+			UFO ufo = new UFO(model, speed, range, price);
+			airField.fleet.add(ufo);
 		}
 
 	}
 
-	public void listFleet() {
+	private void listFleet() {
 
 		for (Jet jet : airField.fleet) {
 
@@ -138,7 +149,7 @@ public class JetsApplication {
 		}
 	}
 
-	public void flyAllJets() {
+	private void flyAllJets() {
 
 		for (Jet jet : airField.fleet) {
 			jet.fly();
@@ -146,7 +157,7 @@ public class JetsApplication {
 		}
 	}
 
-	public void viewFastestJet() {
+	private void viewFastestJet() {
 
 		double fastestJet = 0;
 
@@ -165,7 +176,7 @@ public class JetsApplication {
 		
 	}
 
-	public void loadCargoPlanes() {
+	private void loadCargoPlanes() {
 
 		for (Jet jet : airField.fleet) {
 			if (jet instanceof CargoCarrier) {
@@ -175,14 +186,22 @@ public class JetsApplication {
 		}
 
 	}
-
-	public void dogFight() {
-
-		FighterJets fighterJets = new FighterJets(null, 0, 0, 0);
-		fighterJets.fight();
+	private void huntEarthlings() {
+		UFO alienCraft = new UFO(null, 0, 0, 0);
+				alienCraft.huntEarthlings();
+	}
+	private void dogFight() {
+		for (Jet jet : airField.fleet) {
+			if(jet instanceof FighterJets) {
+				System.out.println(jet.toString());
+				((FighterJets) jet).fight();
+			}
+		}
+//		FighterJets fighterJets = new FighterJets(null, 0, 0, 0);
+//		fighterJets.fight();
 
 	}
-	public void viewLongestRange() {
+	private void viewLongestRange() {
 		
 		double longestRange = 0;
 		for (Jet jet : airField.fleet) {
@@ -198,8 +217,8 @@ public class JetsApplication {
 
 	}
 
-	public void removeAircraft(Scanner kb) {
-		int i = 0;
+	private void removeAircraft(Scanner kb) {
+		int i = 1;
 		for (Jet jet : airField.fleet) {
 			System.out.println(i + ": " + jet.toString());
 			i++;
@@ -208,15 +227,15 @@ public class JetsApplication {
 		System.out.println("Enter number to remove: ");
 		selection = kb.nextInt();
 		if (selection != 0 && selection <= airField.fleet.size()) {
-			airField.fleet.remove(selection);
+			airField.fleet.remove(selection - 1);
 		} else {
 			System.err.println("Invalid input.");
 		}
 		
 	}
-	public void quitProgram() {
+	private void quitProgram() {
 		System.out.println("Thank you for using Jets!");
-		System.out.println();
+		kb.close();
 		System.exit(0);
 	}
 }
